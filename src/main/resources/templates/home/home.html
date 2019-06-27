@@ -1,0 +1,74 @@
+<div class="main-body section-gap mt&#45;&#45;30">
+    <div class="container box_1170">
+        <div class="row">
+            <div class="col-lg-8 post-list">
+                &lt;!&ndash; Start Post Area &ndash;&gt;
+                <section class="post-area">
+                    <div class="single-post-item" th:each="article : ${articlesList}">
+                        <figure>
+                            <img id="preview-image" class="img-fluid" th:src="@{'data:image/jpeg;base64,'+${article.picture}}" alt=""/>
+                        </figure>
+                        <h3>
+                            <a th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}"></a>
+                        </h3>
+                        <p th:text="${article.summary}"></p>
+                        <a th:href="@{/article/{id}(id=${article.id})}" class="primary-btn text-uppercase mt-15">continue Reading</a>
+                        <div class="post-box">
+                            <div class="d-flex">
+                                <div>
+                                    <a th:href="@{#}">
+                                        <img th:src="@{img/author/a1.png}" alt=""/>
+                                    </a>
+                                </div>
+                                <div class="post-meta">
+                                    <div class="meta-head">
+                                        <a href="#" th:text="${article.content}"></a>
+                                    </div>
+                                    <div class="meta-details">
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="lnr lnr-calendar-full"></span>
+                                                    <span th:text="${article.date}"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav class="blog-pagination justify-content-center d-flex">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a href="#" class="page-link" aria-label="Previous">
+										<span aria-hidden="true">
+											<span class="lnr lnr-arrow-left"></span>
+										</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a href="#" class="page-link">01</a></li>
+                            <li class="page-item active"><a href="#" class="page-link">02</a></li>
+                            <li class="page-item"><a href="#" class="page-link">03</a></li>
+                            <li class="page-item"><a href="#" class="page-link">04</a></li>
+                            <li class="page-item"><a href="#" class="page-link">09</a></li>
+                            <li class="page-item">
+                                <a href="#" class="page-link" aria-label="Next">
+										<span aria-hidden="true">
+											<span class="lnr lnr-arrow-right"></span>
+										</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+                &lt;!&ndash; Start Post Area &ndash;&gt;
+            </div>
+
+            <div class="col-lg-4 sidebar" th:include="fragments/new/sideBar">
+
+            </div>
+        </div>
+    </div>
+</div>

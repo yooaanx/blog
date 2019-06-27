@@ -1,0 +1,23 @@
+<main>
+    <div class="container body-container">
+        <div class="row">
+            <div id="main" class="col-sm-9">
+                <div>
+                    <img th:src="@{edit.profilePicture}" alt=""/>
+                    <span th:text="${user.email}"></span>
+                    <br/>
+                    <span th:text="${user.fullName}"></span>
+
+                    <footer>
+                        <div class="pull-right">
+
+                                <a class="btn btn-success btn-xs" th:href="@{/user/edit/{id}(id = ${user.id})}">Edit</a>
+
+                            <a class="btn btn-default btn-xs" th:href="@{/}">back &raquo;</a>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

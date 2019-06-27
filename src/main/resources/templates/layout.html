@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head th:include="fragments/new/head" th:with="pageTitle='Yoan Blog'"></head>
+
+<body>
+<!-- Start header Area -->
+<header th:include="fragments/new/header"></header>
+<!-- End header Area -->
+
+<!-- Start banner Area -->
+<section class="banner-area" th:include="fragments/new/banner" th:classappend="${home} ? '' : relative"></section>
+<!-- End banner Area -->
+
+<!-- Start Post Silder Area -->
+<section class="post-slider-area">
+    <div class="container box_1170">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="owl-carousel active-post-carusel">
+                    <div class="post-box mb-30" th:each="article : ${articles}">
+                        <div class="d-flex">
+                            <div>
+                                <a href="#">
+                                    <img th:src="@{user.profilePicture}" alt=""/>
+                                </a>
+                            </div>
+                            <div class="post-meta">
+                                <div class="meta-head">
+                                    <a href="#" th:text="${article.author}"></a>
+                                </div>
+                                <div class="meta-details">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <span class="lnr lnr-calendar-full"></span>
+                                                13th Oct, 2018
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <p th:text="${article.content}"></p>
+                        <div class="post-btn">
+                            <a  th:href="@{/article/{id}(id=${article.id})}" class="primary-btn text-uppercase">Read More</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Start Post Silder Area -->
+
+<!-- Start main body Area -->
+<main th:include="${view}"></main>
+<!-- Start main body Area -->
+
+<!-- start footer Area -->
+<footer th:include="fragments/new/footer"></footer>
+<!-- End footer Area -->
+
+<span th:include="fragments/new/scripts-bundle"></span>
+</body>
+
+</html>

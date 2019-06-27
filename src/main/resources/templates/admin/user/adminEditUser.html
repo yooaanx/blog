@@ -1,0 +1,72 @@
+<main>
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" th:action="@{/profile/edit/{id}(id=${user.id})}" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <legend>Edit User</legend>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_email">Email</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="email" id="user_email" placeholder="Email" name="email"
+                                   required="required" th:value="${user.email}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_fullName">Full Name</label>
+                        <div class="col-sm-4 ">
+                            <input class="form-control" type="text" id="user_fullName" placeholder="Full Name"
+                                   name="fullName" required="required" th:value="${user.fullName}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_password_first">Password</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="user_password_first" placeholder="Password"
+                                   name="password"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_password_second">Confirm Password</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="user_password_second" placeholder="Password"
+                                   name="confirmPassword"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="user_password_second">User Info</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" rows="6" id="article_content" name="authorInfo"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="profile_picture">Profile Picture</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control" id="profile_picture" placeholder="profile picture"
+                                   name="profilePicture"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="roles">Roles</label>
+                        <div class="col-sm-6">
+                            <th:block th:each="role : ${roles}">
+                                <input id="roles" type="checkbox" name="roles" th:value="${role.id}" th:text="${role.getName()}" th:checked="${user.roles.contains(role)}"/>
+                                <br/>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" th:href="@{/admin/users/}">Cancel</a>
+                            <input value="Edit" type="submit" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</main>

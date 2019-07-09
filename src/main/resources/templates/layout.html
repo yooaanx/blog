@@ -21,7 +21,7 @@
                         <div class="d-flex">
                             <div>
                                 <a href="#">
-                                    <img th:src="@{user.profilePicture}" alt=""/>
+                                    <img th:src="@{edit.profilePicture}" alt=""/>
                                 </a>
                             </div>
                             <div class="post-meta">
@@ -32,8 +32,8 @@
                                     <ul>
                                         <li>
                                             <a href="#">
-                                                <span class="lnr lnr-calendar-full"></span>
-                                                13th Oct, 2018
+                                                    <span class="lnr lnr-calendar-full"></span>
+                                                    <span th:text="${article.date}"></span>
                                             </a>
                                         </li>
                                     </ul>
@@ -51,8 +51,6 @@
         </div>
     </div>
 </section>
-<!-- Start Post Silder Area -->
-
 <!-- Start main body Area -->
 <main th:include="${view}"></main>
 <!-- Start main body Area -->

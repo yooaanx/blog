@@ -17,12 +17,11 @@ public interface ArticleService {
     Article edit(Article article, ArticleBindingModel bindingModel) throws IOException, NotFoundException;
     void delete(Article article);
 
-    List<ArticleViewModel> getLastTwoArticles();
+    List<ArticleViewModel> getLastFiveArticles();
     List<ArticleViewModel> getAllArticles();
 
     ArticleViewModel convertToViewModel(Article article);
-
-
+    List<ArticleViewModel> search(String criteria);
 
 
 }

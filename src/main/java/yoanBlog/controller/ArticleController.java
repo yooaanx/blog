@@ -9,22 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import yoanBlog.bindingModel.ArticleBindingModel;
-import yoanBlog.entity.Article;
-import yoanBlog.entity.Category;
-import yoanBlog.entity.Tag;
-import yoanBlog.entity.User;
-import yoanBlog.repository.TagRepository;
-import yoanBlog.service.ArticleService;
-import yoanBlog.service.CategoryService;
-import yoanBlog.service.UserService;
+import yoanBlog.bindingModel.CommentBindingModel;
+import yoanBlog.entity.*;
+import yoanBlog.service.*;
 import yoanBlog.viewModels.ArticleViewModel;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -32,14 +26,20 @@ public class ArticleController {
     private final ArticleService articleService;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final CommentService commentService;
+    private final PeopleWhoLikedService peopleWhoLikedService;
 
     @Autowired
     public ArticleController(ArticleService articleService,
                              UserService userService,
-                             CategoryService categoryService) {
+                             CategoryService categoryService,
+                             CommentService commentService,
+                             PeopleWhoLikedService peopleWhoLikedService) {
         this.articleService = articleService;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.commentService = commentService;
+        this.peopleWhoLikedService = peopleWhoLikedService;
     }
 
     @GetMapping("/article/create")
@@ -49,12 +49,14 @@ public class ArticleController {
         Date date = new Date();
 
 
+
         model.addAttribute("categories", categories);
         model.addAttribute("view", "article/create");
         model.addAttribute("date", date);
 
 
-        return "base-layout";
+
+        return "layout";
     }
 
     @PostMapping("/article/create")
@@ -72,10 +74,11 @@ public class ArticleController {
         User author = article.getAuthor();
         ArticleViewModel articleViewModel = this.articleService.convertToViewModel(article);
         List<Category> categories = this.categoryService.getAll();
-
+        List<Comment> comments = this.commentService.getAllByArticle(article);
 
         model.addAttribute("user", author);
         model.addAttribute("categories", categories);
+        model.addAttribute("comments", comments);
         model.addAttribute("article", articleViewModel);
         model.addAttribute("view", "article/new/details");
 
@@ -105,7 +108,7 @@ public class ArticleController {
             return "redirect:/article/" + id;
         }
 
-        return "base-layout";
+        return "layout";
     }
 
     @PostMapping("/article/edit/{id}")
@@ -149,10 +152,41 @@ public class ArticleController {
         return "redirect:/";
     }
 
+    @PostMapping("/article/search")
+    public String searchArticle(@RequestParam String criteria, Model model){
+        List<ArticleViewModel> articles = this.articleService.search(criteria);
+
+        model.addAttribute("articles", articles);
+        model.addAttribute("view", "article/search");
+        return "layout";
+    }
+
     private boolean isUserAuthorOrAdmin(Article article){
+        ArticleViewModel articleViewModel = this.articleService.convertToViewModel(article);
 
         User userEntity = this.userService.getCurrentUser();
 
-        return userEntity.isAdmin() || userEntity.isAuthor(article);
+        return userEntity.isAdmin() || userEntity.isAuthor(articleViewModel);
     }
+
+    @PostMapping("/article/{id}/comment/create")
+    @PreAuthorize("isAuthenticated()")
+    public String createComment(@PathVariable("id") Integer id, CommentBindingModel bindingModel){
+        User author = this.userService.getCurrentUser();
+        Article article = this.articleService.getById(id);
+        this.commentService.create(bindingModel, author, article);
+        return "redirect:/article/" + id;
+    }
+
+    @PostMapping("/article/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String showLike (@PathVariable("id") Integer id){
+        User user = this.userService.getCurrentUser();
+        Article article = this.articleService.getById(id);
+        this.peopleWhoLikedService.getAllByArticle(article);
+
+        return "redirect:/article/ + id";
+    }
+
+
 }

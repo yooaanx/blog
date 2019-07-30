@@ -70,7 +70,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("view", "user/profile");
 
-        return "base-layout";
+        return "layout";
     }
 
     @GetMapping("/user/edit/{id}")
@@ -81,7 +81,7 @@ public class UserController {
         model.addAttribute("view", "user/edit");
 
 
-        return "base-layout";
+        return "layout";
     }
 
     @PostMapping("/user/edit/{id}")

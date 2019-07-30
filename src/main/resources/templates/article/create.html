@@ -1,7 +1,8 @@
 <main>
+    <div class="main-body section-gap mt--40">
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" th:action="@{/article/create}" method="POST">
+            <form class="form-horizontal" th:action="@{/article/create}" method="POST" enctype="multipart/form-data">
                 <fieldset>
                     <legend>New Post</legend>
 
@@ -52,5 +53,6 @@
                 </fieldset>
             </form>
         </div>
+    </div>
     </div>
 </main>

@@ -3,14 +3,8 @@ package yoanBlog.bindingModel;
 import org.springframework.web.multipart.MultipartFile;
 import yoanBlog.entity.Category;
 
-import javax.validation.constraints.NotNull;
-
 public class ArticleBindingModel {
-
-    @NotNull
     private String title;
-
-    @NotNull
     private String content;
     private MultipartFile picture;
     private Integer categoryId;

@@ -1,5 +1,6 @@
 package yoanBlog.viewModels;
 
+import yoanBlog.entity.Comment;
 import yoanBlog.entity.Tag;
 import java.util.Set;
 
@@ -9,10 +10,19 @@ public class ArticleViewModel {
     private String title;
     private String content;
     private String summary;
-    private String author;
+    private AuthorViewModel author;
     private String picture;
     private Set<Tag> tags;
     private String date;
+    private Set<Comment> comments;
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
     public String getDate() {
         return date;
@@ -55,11 +65,11 @@ public class ArticleViewModel {
         this.content = content;
     }
 
-    public String getAuthor() {
+    public AuthorViewModel getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(AuthorViewModel author) {
         this.author = author;
     }
 

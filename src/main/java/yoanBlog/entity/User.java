@@ -1,5 +1,7 @@
 package yoanBlog.entity;
 
+import yoanBlog.viewModels.ArticleViewModel;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,6 +18,7 @@ public class User {
     private Set<Role> roles;
     private Set<Article> articles;
     private byte[] profilePicture;
+    private Set<Comment> comments;
 
     public User(String email, String fullName, String password,
                 String authorInfo) {
@@ -25,6 +28,7 @@ public class User {
         this.authorInfo = authorInfo;
         this.articles = new HashSet<>();
         this.roles = new HashSet<>();
+        this.comments = new HashSet<>();
 
     }
 
@@ -34,6 +38,7 @@ public class User {
         this.password = password;
         this.roles = new HashSet<>();
         this.articles = new HashSet<>();
+        this.comments =  new HashSet<>();
     }
 
     public User() {
@@ -125,7 +130,16 @@ public class User {
     }
 
     @Transient
-    public boolean isAuthor (Article article){
+    public boolean isAuthor (ArticleViewModel article){
         return Objects.equals(this.getId(), article.getAuthor().getId());
+    }
+
+    @OneToMany(mappedBy = "author", orphanRemoval = true)
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

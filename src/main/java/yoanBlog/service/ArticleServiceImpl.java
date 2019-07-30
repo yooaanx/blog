@@ -4,14 +4,10 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yoanBlog.bindingModel.ArticleBindingModel;
-import yoanBlog.entity.Article;
-import yoanBlog.entity.Category;
-import yoanBlog.entity.Tag;
-import yoanBlog.entity.User;
-import yoanBlog.repository.ArticleRepository;
-import yoanBlog.repository.CategoryRepository;
-import yoanBlog.repository.TagRepository;
+import yoanBlog.entity.*;
+import yoanBlog.repository.*;
 import yoanBlog.viewModels.ArticleViewModel;
+import yoanBlog.viewModels.AuthorViewModel;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -23,15 +19,20 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final CategoryRepository categoryRepository;
     private final TagRepository tagRepository;
+    private final CommentRepository commentRepository;
+    private final PeopleWhoLikedRepository peopleWhoLikedRepository;
 
 
     @Autowired
     public ArticleServiceImpl(ArticleRepository articleRepository,
                               CategoryRepository categoryRepository,
-                              TagRepository tagRepository) {
+                              TagRepository tagRepository, CommentRepository commentRepository,PeopleWhoLikedRepository peopleWhoLikedRepository) {
         this.articleRepository = articleRepository;
         this.categoryRepository = categoryRepository;
         this.tagRepository = tagRepository;
+        this.commentRepository =  commentRepository;
+        this.peopleWhoLikedRepository = peopleWhoLikedRepository;
+
 
     }
 
@@ -85,8 +86,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleViewModel> getLastTwoArticles() {
-        List<Article> articles = this.articleRepository.findTop2By();
+    public List<ArticleViewModel> getLastFiveArticles() {
+        List<Article> articles = this.articleRepository.findTop5By();
         List<ArticleViewModel> articleViewModels = new ArrayList<>();
 
 
@@ -115,7 +116,10 @@ public class ArticleServiceImpl implements ArticleService {
         articleViewModel.setTitle(article.getTitle());
         articleViewModel.setContent(article.getContent());
         articleViewModel.setSummary(article.getSummary());
-        articleViewModel.setAuthor(article.getAuthor().getFullName());
+
+        articleViewModel.setAuthor(new AuthorViewModel(article.getAuthor().getId(),
+                article.getAuthor().getFullName(),
+                Base64.getEncoder().encodeToString(article.getAuthor().getProfilePicture())));
         articleViewModel.setTags(article.getTags());
         articleViewModel.setDate(this.getDateString(article.getCreationDate()));
 
@@ -125,6 +129,16 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return articleViewModel;
+    }
+
+    @Override
+    public List<ArticleViewModel> search(String criteria) {
+        List<ArticleViewModel> articleViewModels = new ArrayList<>();
+        List<Article> articles = this.articleRepository.findAllByTitleContainingIgnoreCase(criteria);
+        for (Article article : articles){
+            articleViewModels.add(this.convertToViewModel(article));
+        }
+        return articleViewModels;
     }
 
     private String getDateString(Date date){
@@ -151,7 +165,5 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return tags;
     }
-
-
 }
 

@@ -1,9 +1,14 @@
 <main>
     <div class="container body-container">
+        <div class="main-body section-gap mt--40">
         <div class="row">
             <div id="main" class="col-sm-9">
                 <div>
-                    <!--<img th:src="@{/edit/profilePicture}" alt=""/>-->
+
+                    <img id="preview-image" class="img-fluid" th:src="@{'data:image/jpeg;base64,'+${user.profilePicture}}" alt=""/>
+
+                    <img th:src="@{edit.profilePicture}" alt=""/>
+
                     <span th:text="${user.email}"></span>
                     <br/>
                     <span th:text="${user.fullName}"></span>
@@ -19,5 +24,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </main>

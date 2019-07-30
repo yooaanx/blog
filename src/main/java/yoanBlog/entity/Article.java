@@ -1,9 +1,6 @@
 package yoanBlog.entity;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +17,9 @@ public class Article {
     private Date creationDate;
     private Category category;
     private Set<Tag> tags;
+    private Set<Comment> comments;
+    private Set<PeopleWhoLiked> peopleWhoLiked;
+
 
 
     public Article(String title, String content,
@@ -30,6 +30,8 @@ public class Article {
         this.category = category;
         this.tags = tags;
         this.creationDate = new Date();
+        this.comments = new HashSet<>();
+        this.peopleWhoLiked = new HashSet<>();
     }
 
     public Article() {
@@ -112,7 +114,25 @@ public class Article {
 
     @Transient
     public String getSummary(){
-
         return  this.getContent().substring(0, this.getContent().length()/2) + "...";
     }
+
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    public Set<PeopleWhoLiked> getPeopleWhoLiked(){
+        return peopleWhoLiked;}
+
+    public void setPeopleWhoLiked(Set<PeopleWhoLiked> peopleWhoLiked){
+        this.peopleWhoLiked = peopleWhoLiked;}
+
+
+
 }

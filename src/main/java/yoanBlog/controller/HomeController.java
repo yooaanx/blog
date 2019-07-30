@@ -34,7 +34,7 @@ public class HomeController {
     public String index(Model model){
 
         List<Category> categories = this.categoryRepository.findAll();
-        List<ArticleViewModel> articles = this.articleService.getLastTwoArticles();
+        List<ArticleViewModel> articles = this.articleService.getLastFiveArticles();
         List<ArticleViewModel> articleList = this.articleService.getAllArticles();
 
         model.addAttribute("articlesList", articleList);
@@ -43,7 +43,6 @@ public class HomeController {
         model.addAttribute("home", true);
         model.addAttribute("category", categories);
 
-        //return "base-layout";
         return "layout";
     }
 
@@ -73,4 +72,5 @@ public class HomeController {
 
         return "layout";
     }
+
 }

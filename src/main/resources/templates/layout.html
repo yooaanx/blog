@@ -21,7 +21,7 @@
                         <div class="d-flex">
                             <div>
                                 <a href="#">
-                                    <img th:src="@{edit.profilePicture}" alt=""/>
+                                    <img style="width: 70px; height: auto" th:src="@{'data:image/jpeg;base64,'+${article.author.picture}}" alt=""/>
                                 </a>
                             </div>
                             <div class="post-meta">
@@ -53,6 +53,7 @@
 </section>
 <!-- Start main body Area -->
 <main th:include="${view}"></main>
+
 <!-- Start main body Area -->
 
 <!-- start footer Area -->

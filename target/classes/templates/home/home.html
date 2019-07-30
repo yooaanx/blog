@@ -5,7 +5,7 @@
                 <section class="post-area">
                     <div class="single-post-item" th:each="article : ${articlesList}">
                         <figure>
-                            <img id="preview-image" class="img-fluid" th:src="@{'data:image/jpeg;base64,'+${article.picture}}" alt=""/>
+                            <img style="width: 680px; height: auto" class="img-fluid" th:src="@{'data:image/jpeg;base64,'+${article.picture}}" alt=""/>
                         </figure>
                         <h3>
                             <a th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}"></a>
@@ -16,7 +16,7 @@
                             <div class="d-flex">
                                 <div>
                                     <a th:href="@{#}">
-                                        <img th:src="@{img/author/a1.png}" alt=""/>
+                                        <img style="width: 100px; height: auto" th:src="@{'data:image/jpeg;base64,'+${article.author.picture}}" alt=""/>
                                     </a>
                                 </div>
                                 <div class="post-meta">
@@ -47,8 +47,8 @@
 										</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a href="#" class="page-link">01</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">02</a></li>
+                            <li class="page-item active"><a href="#" class="page-link">01</a></li>
+                            <li class="page-item"><a href="#" class="page-link">02</a></li>
                             <li class="page-item"><a href="#" class="page-link">03</a></li>
                             <li class="page-item"><a href="#" class="page-link">04</a></li>
                             <li class="page-item"><a href="#" class="page-link">09</a></li>

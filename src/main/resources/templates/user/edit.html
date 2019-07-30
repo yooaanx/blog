@@ -1,5 +1,6 @@
 <main>
     <div class="container body-content span=8 offset=2">
+        <div class="main-body section-gap mt--40">
         <div class="well">
             <form class="form-horizontal" th:action="@{/user/edit/{id}(id=${user.id})}" method="POST" enctype="multipart/form-data">
                 <fieldset>
@@ -43,12 +44,13 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
-                            <a class="btn btn-default" th:href="@{/users/}">Cancel</a>
+                            <!--<a class="btn btn-default" th:href="@{/user/{id}(id = ${user.id})}">Cancel</a>-->
                             <input value="Edit" type="submit" class="btn btn-success"/>
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
+    </div>
     </div>
 </main>
